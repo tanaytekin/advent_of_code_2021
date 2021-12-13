@@ -21,29 +21,22 @@ epsilon = int(epsilon_str, 2)
 
 print('Part One : %d' % (gamma * epsilon))
 
-oxygen_arr = data
-for i in range(width):
-    ones = len([int(j[i]) for j in oxygen_arr if int(j[i]) == 1 ])
-    zeros = len([int(j[i]) for j in oxygen_arr if int(j[i]) == 0 ])
-    if ones >= zeros:
-        md = 1
-    else:
-        md = 0
-    oxygen_arr = list(filter(lambda x : int(x[i]) == md, oxygen_arr))
-oxygen = int(oxygen_arr[0], 2)
+
+def part2(oxygen):
+    arr = data
+    for i in range(width):
+        if len(arr) == 1:
+            return int(arr[0], 2)
+        ones = len([int(j[i]) for j in arr if int(j[i]) == 1 ])
+        zeros = len([int(j[i]) for j in arr if int(j[i]) == 0 ])
+        if ones >= zeros:
+            md = 1 if oxygen else 0
+        else:
+            md = 0 if oxygen else 1
+        arr = list(filter(lambda x : int(x[i]) == md, arr))
+    return int(arr[0], 2)
 
 
-co2_arr = data
-for i in range(width):
-    if len(co2_arr) == 1:
-        break
-    ones = len([int(j[i]) for j in co2_arr if int(j[i]) == 1 ])
-    zeros = len([int(j[i]) for j in co2_arr if int(j[i]) == 0 ])
-    if ones >= zeros:
-        md = 0
-    else:
-        md = 1
-    co2_arr = list(filter(lambda x : int(x[i]) == md, co2_arr))
-co2 = int(co2_arr[0], 2)
+(oxygen, co2) = (part2(True), part2(False))
 
 print('Part Two : %d' % (oxygen * co2))
